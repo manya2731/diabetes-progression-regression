@@ -4,7 +4,7 @@ Predicts a quantitative measure of diabetes progression one year after baseline,
 
 ## Why this matters
 
-A continuous progression score (rather than a yes/no label) lets clinicians prioritize patients by expected severity, not just flag them. This project also rigorously checks the 5 assumptions of Linear Regression rather than just reporting an R² — a step many beginner projects skip.
+A continuous progression score (rather than a yes/no label) lets clinicians prioritize patients by expected severity, not just flag them. This project also rigorously checks the 5 assumptions of Linear Regression rather than just reporting an R².
 
 ## Approach
 
@@ -21,7 +21,7 @@ A continuous progression score (rather than a yes/no label) lets clinicians prio
 | Linear Regression | 42.79 | 53.85 | 0.453 |
 | Random Forest | 44.58 | 54.76 | 0.434 |
 
-## Assumption checks (rigorous validation, not just R²)
+## Assumption checks
 
 | Assumption | Test used | Result | Verdict |
 |---|---|---|---|
@@ -31,7 +31,7 @@ A continuous progression score (rather than a yes/no label) lets clinicians prio
 | Normality of residuals | Shapiro-Wilk test | p = 0.64 (> 0.05) | Holds |
 | No multicollinearity | Variance Inflation Factor (VIF) | s1 VIF=55, s2 VIF=36, s3 VIF=14 | Violated |
 
-**Takeaway:** the blood-serum features (s1–s5) are highly correlated with each other (they're all lipid/cholesterol-related measurements), which inflates their VIF. This doesn't break predictions (R² is still fine) but it means individual coefficients (e.g., "s1 has coefficient -931") can't be trusted for interpretation — a classic real-world caveat.
+**Takeaway:** the blood-serum features (s1–s5) are highly correlated with each other (they're all lipid/cholesterol-related measurements), which inflates their VIF. This doesn't break predictions (R² is still fine) but it means individual coefficients (e.g., "s1 has coefficient -931") can't be trusted for interpretation..
 
 ## How to run
 
@@ -43,9 +43,3 @@ python diabetes_progression_regressor.py
 ## Tech stack
 
 Python, scikit-learn, pandas, numpy, scipy, matplotlib
-
-## Possible extensions
-
-- Ridge/Lasso regression to handle multicollinearity (regularization)
-- Drop or combine correlated s1-s5 features (PCA)
-- Try polynomial features for non-linear relationships
