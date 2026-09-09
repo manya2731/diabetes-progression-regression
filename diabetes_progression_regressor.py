@@ -1,16 +1,11 @@
 """
-Project 2: Diabetes Disease Progression Prediction (Regression)
+Project: Diabetes Disease Progression Prediction (Regression)
 -----------------------------------------------------------------
 Goal: Predict a quantitative measure of diabetes progression one year
 after baseline, using 10 baseline features (age, sex, BMI, blood
 pressure, 6 blood serum measurements) — the classic Diabetes dataset
 originally used by Efron et al. (2004) "Least Angle Regression".
 
-Why this project:
-- Real medical dataset, regression task (predicts a continuous
-  disease-severity score, not a category)
-- Perfect for demonstrating & TESTING Linear Regression assumptions
-- Healthcare-relevant for Optum
 """
 import os
 import numpy as np
@@ -28,9 +23,7 @@ from scipy import stats
 # Output directory for saved files
 OUT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# ----------------------------
 # 1. Load data
-# ----------------------------
 data = load_diabetes()
 X = pd.DataFrame(data.data, columns=data.feature_names)
 y = pd.Series(data.target, name="disease_progression")
@@ -38,16 +31,12 @@ y = pd.Series(data.target, name="disease_progression")
 print("Dataset shape:", X.shape)
 print(X.describe().T[["mean", "std", "min", "max"]])
 
-# ----------------------------
 # 2. Train/test split
-# ----------------------------
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
 
-# ----------------------------
 # 3. Train Linear Regression
-# ----------------------------
 lin_reg = LinearRegression()
 lin_reg.fit(X_train, y_train)
 y_pred = lin_reg.predict(X_test)
@@ -76,10 +65,7 @@ print(f"MAE : {mean_absolute_error(y_test, y_pred_rf):.2f}")
 print(f"RMSE: {mean_squared_error(y_test, y_pred_rf) ** 0.5:.2f}")
 print(f"R2  : {r2_score(y_test, y_pred_rf):.4f}")
 
-# -----------------------------------------------------
 # 4. CHECK LINEAR REGRESSION ASSUMPTIONS
-#    (implemented manually with numpy/scipy/sklearn - no statsmodels needed)
-# -----------------------------------------------------
 fitted = lin_reg.predict(X_train)
 residuals = (y_train.values - fitted)
 
@@ -124,9 +110,7 @@ vif_data = pd.DataFrame({"feature": X_train.columns, "VIF": vif_scores})
 print(vif_data)
 print("  (VIF > 5-10 suggests problematic multicollinearity)")
 
-# ----------------------------
 # Plots for assumption checks
-# ----------------------------
 fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
 axes[0].scatter(fitted, residuals, alpha=0.6)
